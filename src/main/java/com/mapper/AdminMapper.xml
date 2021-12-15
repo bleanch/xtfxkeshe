@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.AdminMapper">
+    <resultMap id="AdminMap" type="com.entity.Admin">
+        <id property="id" column="admin_id"/>
+        <result property="name" column="admin_name"/>
+        <result property="acc" column="admin_account"/>
+        <result property="pwd" column="admin_password"/>
+    </resultMap>
+
+    <!-- 命名空间，名字可以随意起，只要不冲突即可 -->
+    <!-- 对象映射，可以不写 -->
+    <!-- 查询功能，resultType 设置返回值类型 -->
+    <select id="getadmins" resultMap="AdminMap">  <!-- 书写 SQL 语句 -->
+        SELECT * FROM it.tb_admins
+    </select>
+    <select id="getadmin" parameterType="int" resultMap="AdminMap">
+        SELECT * FROM it.tb_admins where admin_id = #{id}
+    </select>
+    <insert id="addadmin" parameterType="com.entity.Admin">
+        insert into it.tb_admins(admin_id,admin_name,admin_account,admin_password) values (#{id},#{name},#{acc},#{pwd})
+    </insert>
+    <update id="updateadmin" parameterType="com.entity.Admin">
+        update it.tb_admins set admin_name=#{name},admin_account=#{acc},admin_password=#{pwd} where admin_id=#{id}
+    </update>
+    <delete id="deleteadmin" parameterType="int">
+        delete from it.tb_admins where admin_id=#{id};
+    </delete>
+</mapper>

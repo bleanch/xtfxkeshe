@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.UserMapper">
+    <resultMap id="UserMap" type="com.entity.User">
+        <id property="id" column="uid"/>
+        <result property="name" column="user_name"/>
+        <result property="acc" column="user_account"/>
+        <result property="addr" column="user_address"/>
+        <result property="pwd" column="user_password"/>
+    </resultMap>
+
+    <!-- 命名空间，名字可以随意起，只要不冲突即可 -->
+    <!-- 对象映射，可以不写 -->
+    <!-- 查询功能，resultType 设置返回值类型 -->
+    <select id="gets" resultMap="UserMap">  <!-- 书写 SQL 语句 -->
+        SELECT * FROM it.tb_users
+    </select>
+    <select id="get" parameterType="int" resultMap="UserMap">
+        SELECT * FROM it.tb_users where uid= #{id}
+    </select>
+    <insert id="add" parameterType="com.entity.User">
+        insert into it.tb_users(uid,user_name,user_account,user_address,user_password)
+        values (#{id},#{name},#{acc},#{addr},#{pwd})
+    </insert>
+    <update id="update" parameterType="com.entity.User">
+        update it.tb_users set user_name=#{name},user_account=#{acc},user_address=#{addr},user_password=#{pwd} where uid=#{id}
+    </update>
+    <delete id="delete" parameterType="int">
+        delete from it.tb_users where uid=#{id};
+    </delete>
+</mapper>

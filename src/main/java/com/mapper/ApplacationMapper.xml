@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.ApplacationMapper">
+    <resultMap id="ApplacationMap" type="com.entity.Applacation">
+        <id property="fid" column="from_id"/>
+        <result property="fname" column="from_name"/>
+        <result property="uid" column="user_id"/>
+        <result property="content" column="from_content"/>
+        <result property="propity" column="priority_id"/>
+        <result property="gid" column="group_id"/>
+        <result property="pid" column="procseeing"/>
+        <result property="datetime" column="datetime"/>
+    </resultMap>
+
+    <!-- 命名空间，名字可以随意起，只要不冲突即可 -->
+    <!-- 对象映射，可以不写 -->
+    <!-- 查询功能，resultType 设置返回值类型 -->
+    <select id="gets" resultMap="ApplacationMap">  <!-- 书写 SQL 语句 -->
+        SELECT * FROM it.tb_application_from
+    </select>
+    <select id="get" parameterType="int" resultMap="ApplacationMap">
+        SELECT * FROM it.tb_application_from where from_id = #{fid}
+    </select>
+    <insert id="add" parameterType="com.entity.Applacation">
+        insert into it.tb_application_from(from_id,from_name,user_id,from_content,priority_id,group_id,procseeing,datetime)
+        values (#{fid},#{fname},#{uid},#{content},#{propity},#{gid},#{pid},#{datetime})
+    </insert>
+    <update id="update" parameterType="com.entity.Applacation">
+        update it.tb_application_from set group_id=#{gid},procseeing=#{pid} where from_id=#{fid}
+    </update>
+    <delete id="delete" parameterType="int">
+        delete from it.tb_application_from where from_id=#{fid};
+    </delete>
+</mapper>

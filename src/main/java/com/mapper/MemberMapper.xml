@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.MemberMapper">
+    <resultMap id="MemberMap" type="com.entity.Member">
+        <id property="mid" column="member_id"/>
+        <result property="name" column="member_name"/>
+        <result property="gid" column="group_id"/>
+        <result property="acc" column="member_account"/>
+        <result property="pwd" column="member_password"/>
+        <result property="duty" column="member_duty"/>
+    </resultMap>
+
+    <!-- 命名空间，名字可以随意起，只要不冲突即可 -->
+    <!-- 对象映射，可以不写 -->
+    <!-- 查询功能，resultType 设置返回值类型 -->
+    <select id="gets" resultMap="MemberMap">  <!-- 书写 SQL 语句 -->
+        SELECT * FROM it.tb_members
+    </select>
+    <select id="get" parameterType="int" resultMap="MemberMap">
+        SELECT * FROM it.tb_members where member_id = #{mid}
+    </select>
+    <select id="getmems" parameterType="int" resultMap="MemberMap">
+        SELECT * FROM it.tb_members where group_id= #{gid}
+    </select>
+    <insert id="add" parameterType="com.entity.Member">
+        insert into it.tb_members(member_id,member_name,group_id,member_account,member_password,member_duty)
+        values (#{mid},#{name},#{gid},#{acc},#{pwd},#{duty})
+    </insert>
+    <update id="update" parameterType="com.entity.Member">
+        update it.tb_members set group_id=#{gid},member_name=#{name},member_account=#{acc},member_password=#{pwd},member_duty=#{duty}
+        where member_id=#{mid}
+    </update>
+    <delete id="delete" parameterType="int">
+        delete from it.tb_members where member_id=#{mid};
+    </delete>
+</mapper>

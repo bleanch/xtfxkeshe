@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.GroupMapper">
+    <resultMap id="GroupMap" type="com.entity.Group">
+        <id property="gid" column="group_id"/>
+        <result property="lid" column="ledder_id"/>
+        <result property="name" column="group_name"/>
+        <result property="num" column="group_num"/>
+    </resultMap>
+
+    <!-- 命名空间，名字可以随意起，只要不冲突即可 -->
+    <!-- 对象映射，可以不写 -->
+    <!-- 查询功能，resultType 设置返回值类型 -->
+    <select id="gets" resultMap="GroupMap">  <!-- 书写 SQL 语句 -->
+        SELECT * FROM it.tb_groups
+    </select>
+    <select id="get" parameterType="int" resultMap="GroupMap">
+        SELECT * FROM it.tb_groups where group_id = #{gid}
+    </select>
+    <insert id="add" parameterType="com.entity.Group">
+        insert into it.tb_groups(group_id,ledder_id,group_name,group_num)
+        values (#{gid},#{lid},#{name},#{num})
+    </insert>
+    <update id="update" parameterType="com.entity.Group">
+        update it.tb_groups set ledder_id=#{lid},group_name=#{name} where group_id=#{gid}
+    </update>
+    <delete id="delete" parameterType="int">
+        delete from it.tb_groups where group_id=#{gid};
+    </delete>
+</mapper>
